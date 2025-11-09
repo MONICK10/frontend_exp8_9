@@ -3,7 +3,7 @@ import axios from 'axios';
 // If running locally, use localhost, otherwise use the environment variable
 const API_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:5000/api'
-    : 'https://exp8-backend-1.onrender.com/api';
+    : 'https://backend-exp8-9.onrender.com/api';
 
 export const login = async (email, password) => {
   try {
@@ -101,4 +101,5 @@ export const getCurrentUser = async (token) => {
     console.error('Error fetching user details:', error);
     throw error;
   }
+
 };
