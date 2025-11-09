@@ -1,0 +1,103 @@
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, Typography, Button, Paper, Container } from '@mui/material';
+import { useAuth } from '../contexts/AuthContext';
+
+const SuccessPage = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const userDetails = location.state?.user;
+
+    const handleDashboardClick = () => {
+        if (userDetails?.role === 'admin') {
+            navigate('/admin/dashboard');
+        } else {
+            navigate('/dashboard');
+        }
+    };
+
+    if (!userDetails) {
+        navigate('/');
+        return null;
+    }
+
+    return (
+        <Container maxWidth="sm">
+            <Box sx={{ 
+                mt: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <Paper 
+                    elevation={3} 
+                    sx={{ 
+                        p: 4, 
+                        width: '100%',
+                        backgroundColor: '#ffffff',
+                        borderRadius: '8px'
+                    }}
+                >
+                    <Typography 
+                        variant="h5" 
+                        component="h1" 
+                        gutterBottom 
+                        sx={{ 
+                            textAlign: 'center',
+                            color: '#2e7d32',
+                            fontWeight: 'bold',
+                            mb: 3
+                        }}
+                    >
+                        Logged in Successfully!
+                    </Typography>
+
+                    <Box sx={{ 
+                        my: 3, 
+                        p: 2, 
+                        backgroundColor: '#f5f5f5',
+                        borderRadius: '4px'
+                    }}>
+                        <Typography 
+                            variant="h6" 
+                            gutterBottom 
+                            sx={{ 
+                                color: '#1a237e',
+                                fontWeight: 'bold',
+                                mb: 2
+                            }}
+                        >
+                            User Details:
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            <strong>Name:</strong> {userDetails.name}
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            <strong>Email:</strong> {userDetails.email}
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            <strong>Role:</strong> {userDetails.role}
+                        </Typography>
+                    </Box>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleDashboardClick}
+                        fullWidth
+                        sx={{ 
+                            mt: 2,
+                            py: 1.5,
+                            fontWeight: 'bold',
+                            fontSize: '1.1rem'
+                        }}
+                    >
+                        Click Here
+                    </Button>
+                </Paper>
+            </Box>
+        </Container>
+    );
+};
+
+export default SuccessPage;
